@@ -144,11 +144,9 @@ def get_faker_value(column_name: str, column_type, nullable: bool):
     # Default fallback
     return fake.word()
 
-
 def get_table_columns(inspector, table_name: str) -> list[dict]:
     """Get column information for a table."""
     return inspector.get_columns(table_name)
-
 
 def get_foreign_keys(inspector, table_name: str) -> tuple[dict[str, tuple[str, str]], dict[str, tuple[str, str]]]:
     """Get foreign key mappings: local_column -> (referred_table, referred_column).
@@ -166,12 +164,10 @@ def get_foreign_keys(inspector, table_name: str) -> tuple[dict[str, tuple[str, s
                 fk_map[local_col] = (fk["referred_table"], referred_col)
     return fk_map, self_ref_map
 
-
 def get_primary_keys(inspector, table_name: str) -> set[str]:
     """Get primary key column names for a table."""
     pk = inspector.get_pk_constraint(table_name)
     return set(pk.get("constrained_columns", []))
-
 
 def get_unique_columns(inspector, table_name: str) -> set[str]:
     """Get columns that have unique constraints."""
@@ -180,7 +176,6 @@ def get_unique_columns(inspector, table_name: str) -> set[str]:
         if idx.get("unique"):
             unique_cols.update(idx.get("column_names", []))
     return unique_cols
-
 
 @app.command()
 def seed(
@@ -398,7 +393,6 @@ def seed(
                 typer.echo(f"  {table_name}: {actual_rows} rows")
 
     typer.echo("Seeding complete!")
-
 
 if __name__ == "__main__":
     app()
